@@ -65,6 +65,10 @@
                             </div>
                         </div>
                     </form>
+
+                    <a type="submit" class="btn btn-primary" href="{{action('Auth\LoginController@redirectToGoogle')}}">
+                        Login With Google
+                    </a>
                 </div>
             </div>
         </div>
