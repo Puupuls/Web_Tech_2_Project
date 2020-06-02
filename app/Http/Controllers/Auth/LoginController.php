@@ -40,6 +40,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
