@@ -1,79 +1,107 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+Description of Practical Assignment “Finance tracker”
+===
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+### Team of developers
 
-## About Laravel
+Only one student will be developing this system:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   Pauls Purviņš, pp19026 (design, UI design, business logic design, all programming of models, views and controllers, database design)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Development environment2
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+It is planned to develop the system in PHP 7.4.3 environment using Laravel 7.6.2 library. It is planned to use MySQL 8.0 database system for data storage. The code will be stored in the GitHub system.
 
-## Learning Laravel
+### Main Functionality
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+It is planed to develop a system, where user s can keep track of their income and expenses.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+It will be possible for users to register and keep track of their money as well as to add someone else, for example, family member, to his/her finance tracker. User will be able to add and modify different income end expense sources and add descriptions to each expense or income unit.
 
-## Laravel Sponsors
+A search / filter for past expenses will be implemented too
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Data registry
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
+Main data in the system is: User, expense tracking instance, expense category, income source and most importantly – transaction.
 
-## Contributing
+![Planed database layout](./DB_GRAPH.png 'Planed database layout')
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+System consists of expense trackers – logbook type instance that a user can create. User can add personalized categories for money income and expenses, as well as add other user as participant in his tracker. If tracker owner allows so, participants can also add expenses/income and they are added to logbook. Each expense/income is tied to user that created it. To expense user can add amount, description and image if they want to.
 
-## Code of Conduct
+### MVC
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+The system will be implemented following an MVC paradigm. The system will be distributed into the following components:
 
-## Security Vulnerabilities
+Models:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+-   User
+-   Tracker
+-   Income\_source
+-   Expense\_category
+-   Transactions
+-   Participant
 
-## License
+Views:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   register (using Laravel inbuilt register, with own style)
+-   login (using Laravel inbuilt login, with own style)
+-   edit profile
+-   add / edit tracker
+-   list trackers (show stats for each for this month, previous month)
+-   add / edit income source
+-   add / edit expense category
+-   add / edit expense
+-   list expenses
+-   Admin – see generic statistics about system
+-   Home page
+
+Controllers:
+
+-   UserController with methods for opening (show) and editing(update) user profile as well as stats generator for admin view (admin\_stats)
+-   TrackerController with methods for seeing all (index)/ creating (store) / editing(update) / deleting (destroy) trackers
+-   ParticipantController with methods for seeing all inside tracker (index) / viewing specified (show) / creating (store) / editing(update) / deleting (destroy) participants
+-   IncomeSourceController with methods for seeing all inside tracker (index) / viewing specified (show) / creating (store) / editing(update) / deleting (destroy) / getting as array (list) income sources
+-   ExpenseCategoryController with methods for seeing all inside tracker(index) / viewing specified (show) / creating (store) / editing(update) / deleting (destroy) / getting as array (list) expense categories
+-   TransactionController with methods for seeing all inside tracker(index) / viewing specified (show) / creating (store) / editing(update) / deleting (destroy) / getting as array (list) transactions
+-   Laravel standard RegisterController and LoginController
+
+### User Roles
+
+The system supports multiple user roles – guest (page visitor who has not logged in), user and admin (user with more permissions). Each of them can do different things.
+
+Guest:
+
+-   See home page
+-   Login
+-   Register
+
+User:
+
+-   add / modify / remove own trackers
+-   add / modify / remove participants in own trackers
+-   add / modify / remove Income sources in own trackers / trackers where has permissions from owner
+-   add / modify / remove Expense categories in own trackers / trackers where has permissions from owner
+-   add / modify / remove Transactions in own trackers / trackers where has permissions from owner
+
+Admin:
+
+-   Everything that user can do
+-   See site-wide statistics
+
+### User Authentication:
+
+It is possible to register and login using sites login systems, that are based on Laravel standard RegisterController and LoginController
+
+### Security:
+
+RegisterController and LoginController uses bcrypt password hashing algorithm, which is one of the best algorithms for password hashing and makes sure that even in data breach situation users passwords will be incredibly hard to crack.
+
+Every form uses csrf (Cross-site request forgery) token which prevents malicious 3<sup>rd</sup> party sites from exploiting user and submitting to our system data, that he/she didn’t want to, for example delete profile / tracker / some transactions. This token is automatically checked by CSRFProtectionMiddleware for each POST request to be sure that data coming from user is indeed from our site, not from some other site that has form, that targets our site.
+
+Site uses SSL certificate so users can be sure that their data is secure.
+
+### System interface
+
+The image shows main interface where user can look at his transactions and search for specific one
+![Planed UI Layout](./UI_GRAPH_1.png 'Planed UI Layout')
+In this image main tracker select screen is shown, where user can manage tracker settings, and see statistics about their finances.
+![Planed UI Layout](./UI_GRAPH_2.png 'Planed UI Layout')
