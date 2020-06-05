@@ -15,13 +15,26 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/redirect', 'Auth\LoginController@redirectToGoogle');
 Route::get('/callback', 'Auth\LoginController@handleGoogleCallback');
+Route::get('lang/{locale}','LanguageController')->name('lang');
 
 Route::get('/', function () {
     return view('welcome');
+    if(!Auth::check()) {
+        return view('welcome');
+    }else{
+        if(Auth::user()->last_tracker_id) {
+            return redirect()->route('tracker.show', Auth::user()->last_tracker_id);
+        }else{
+            return redirect()->route('user.index');
+        }
+    }
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('lang/{locale}','LanguageController')->name('lang');
+Route::resource('user', 'UserController');
+Route::resource('tracker', 'TrackerController');
+Route::resource('tracker/participant', 'ParticipantController');
+Route::resource('tracker/income', 'IncomeSourceController');
+Route::resource('tracker/expense', 'ExpenseCategoryController');
+Route::resource('transaction', 'TransactionController');

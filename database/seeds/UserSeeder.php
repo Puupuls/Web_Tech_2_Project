@@ -15,11 +15,11 @@ class UserSeeder extends Seeder
         User::truncate();
 
         User::create(array('id'=>1, 'name' => 'Pauls',
-            'email' => 'pauls@pauls.test',
+            'email' => 'pauls@projekts.test',
             'password' => bcrypt('secret'),
             'is_admin' => true));
         User::create(array('id'=>2, 'name' => 'Test',
-            'email' => 'test@pauls.test',
+            'email' => 'test@projekts.test',
             'password' => bcrypt('secret'),
             'is_admin' => false));
     }

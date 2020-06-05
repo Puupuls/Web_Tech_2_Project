@@ -48,4 +48,8 @@ class User extends Authenticatable
     public function participates(){
         return $this->hasMany('App\Participants');
     }
+
+    public function last_tracker(){
+        return $this->belongsTo('App\Tracker', 'last_tracker_id');
+    }
 }

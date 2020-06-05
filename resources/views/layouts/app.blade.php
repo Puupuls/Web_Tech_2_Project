@@ -34,8 +34,22 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @auth
-                            <li class="nav-item">
-                                <a class="nav-link" href="">{{__('messages.my_trackers')}}</a>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('messages.my_trackers') }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                                    @foreach($trackers as $tracker)
+                                        <a class="dropdown-item" href="{{ route('tracker.show', $tracker->id) }}">
+                                            {{ $tracker->name }}
+                                        </a>
+                                    @endforeach
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
                             </li>
                         @endauth
                     </ul>
