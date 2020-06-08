@@ -18,7 +18,6 @@ Route::get('/callback', 'Auth\LoginController@handleGoogleCallback');
 Route::get('lang/{locale}','LanguageController')->name('lang');
 
 Route::get('/', function () {
-    return view('welcome');
     if(!Auth::check()) {
         return view('welcome');
     }else{
@@ -32,9 +31,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('user/edit', 'UserController@edit_mortal')->name('user.edit_mortal');
 Route::resource('user', 'UserController');
+
 Route::resource('tracker', 'TrackerController');
+
 Route::resource('tracker/participant', 'ParticipantController');
+
 Route::resource('tracker/income', 'IncomeSourceController');
+
 Route::resource('tracker/expense', 'ExpenseCategoryController');
+
 Route::resource('transaction', 'TransactionController');
+

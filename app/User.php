@@ -46,7 +46,7 @@ class User extends Authenticatable
     }
 
     public function participates(){
-        return $this->hasMany('App\Participants');
+        return $this->hasMany('App\Participant');
     }
 
     public function last_tracker(){
