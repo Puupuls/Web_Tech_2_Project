@@ -20,6 +20,12 @@ class LanguageMiddleware
         $lang = $request->cookie('language');
         if (!empty($lang)) {
             App::setLocale($lang);
+        }else{
+            $l = 'en';
+            if(strlen($request->header('accept-language')) > 1){
+                $l = substr($request->header('accept-language'), 0, 2);
+            }
+            App::setLocale($l);
         }
         return $next($request);
     }
