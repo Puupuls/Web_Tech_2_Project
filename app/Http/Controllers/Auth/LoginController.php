@@ -60,11 +60,11 @@ class LoginController extends Controller
             // create a new user
             $newUser                  = new User;
             $newUser->name            = $user->name;
-            $newUser->email           = $user->email;
+            $newUser->email           = strtolower($user->email);
             $newUser->google_id       = $user->id;
             $newUser->save();
             auth()->login($newUser, true);
         }
-        return redirect()->back('/');
+        return redirect('/');
     }
 }

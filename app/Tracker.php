@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tracker extends Model
 {
     protected $fillable = [
-        'name'
+        'name', 'owner_id'
     ];
     protected $table = 'trackers';
 
@@ -21,7 +21,7 @@ class Tracker extends Model
         return $this->hasMany('App\IncomeSources');
     }
     public function participants(){
-        return $this->hasMany('App\Participants');
+        return $this->hasMany('App\Participant');
     }
     public function transactions(){
         return $this->hasMany('App\Transaction');

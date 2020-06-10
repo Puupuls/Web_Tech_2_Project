@@ -77,9 +77,7 @@ class UserController extends Controller
 
     public function edit_mortal()
     {
-        //return $this->edit(auth()->user()->id);
-        $user = auth()->user();
-        return view('profile_edit', ['user' => $user]);
+        return $this->edit(auth()->user()->id);
     }
 
     /**

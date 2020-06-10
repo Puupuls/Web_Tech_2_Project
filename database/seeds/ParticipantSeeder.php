@@ -14,6 +14,6 @@ class ParticipantSeeder extends Seeder
     {
         Participant::truncate();
 
-        Participant::create(['user_id'=>2, 'tracker_id'=>3, 'permissions'=>7]);
+        Participant::create(['user_id'=>2, 'tracker_id'=>3, 'permissions'=>0]);
     }
 }

@@ -53,10 +53,7 @@
                                         {{$part->tracker->name}} ( {{$part->tracker->owner->name}} )
                                     </a>
                                 @endforeach
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
+                                    <a href="{{route('tracker.create')}}" class="dropdown-item">{{__('messages.add_new')}}</a>
                             </div>
                         </li>
                     @endauth

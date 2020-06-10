@@ -17,7 +17,7 @@ class CreateParticipantsTable extends Migration
             $table->id();
             $table->foreignId('tracker_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->integer('permissions');
+            $table->integer('permissions')->default(0);
             $table->timestamps();
         });
     }

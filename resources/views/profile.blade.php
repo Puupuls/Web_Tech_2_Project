@@ -7,7 +7,7 @@
                 <div class="card mb-3">
                     <div class="card-header">
                         <span class="align-middle">{{$user->name}}</span>
-                        <a href="{{auth()->user()->is_admin && auth()->user()->id != $user->id? route('user.edit', $user->id) : route('user.edit_mortal')}}" class="S float-right">{{__('edit')}}</a>
+                        <a href="{{auth()->user()->is_admin && auth()->user()->id != $user->id? route('user.edit', $user->id) : route('user.edit_mortal')}}" class="S float-right">{{__('messages.edit')}}</a>
                     </div>
                     <div class="card-body">
                         @if (session('status'))
@@ -18,19 +18,19 @@
                         {{__('auth.email_address')}}: {{$user->email}}
                     </div>
                 </div>
-                @if(count($user->trackers) > 0)
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            {{__('messages.owned_trackers')}}
-                        </div>
-                        <div class="card-body">
-                            @foreach($user->trackers as $tracker)
-                                <a class="btn btn-dark" href="{{route('tracker.show', $tracker->id)}}">{{$tracker->name}}</a><br/>
-                            @endforeach
-                        </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <span class="align-middle">{{__('messages.owned_trackers')}}</span>
+                        @if(auth()->user()->id == $user->id)
+                            <a href="{{route('tracker.create')}}" class="float-right">{{__('messages.add_new')}}</a>
+                        @endif
                     </div>
-                @endif
-
+                    <div class="card-body">
+                        @foreach($user->trackers as $tracker)
+                            <a class="btn btn-dark" href="{{route('tracker.show', $tracker->id)}}">{{$tracker->name}}</a><br/>
+                        @endforeach
+                    </div>
+                </div>
                 @if(count($user->participates) > 0)
                     <div class="card mb-3">
                         <div class="card-header">
@@ -38,7 +38,12 @@
                         </div>
                         <div class="card-body">
                             @foreach($user->participates as $part)
-                                <a class="btn btn-dark" href="{{route('tracker.show', $part->tracker->id)}}">{{$part->tracker->name}} ( {{$part->tracker->owner->name}} )</a><br/>
+                                <div id='part-{{$part->id}}' class="row justify-content-between">
+                                    <a class="btn btn-dark" href="{{route('tracker.show', $part->tracker->id)}}">{{$part->tracker->name}} ( {{$part->tracker->owner->name}} )</a>
+                                    @if(auth()->user()->id == $user->id)
+                                        <a class="btn btn-dark" onclick="leave({{$part->id}})">{{__('messages.leave')}}</a>
+                                    @endif
+                                </div>
                             @endforeach
                         </div>
                     </div>
@@ -46,4 +51,25 @@
             </div>
         </div>
     </div>
+    @if(auth()->user()->id == $user->id)
+        <script type="application/javascript">
+            function leave(id){
+                let url = `{{ action('ParticipantController@destroy', 1) }}`;
+                url= url.substr(0, url.length-2) + '/' + id;
+                console.log(url)
+                let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    type: "DELETE",
+                    url: url,
+                    data: { participant_id: id, _token: CSRF_TOKEN },
+                    success: function (data) {
+                        $(`#part-${id}`).remove();
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
+            }
+        </script>
+    @endif
 @endsection
