@@ -22,6 +22,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon"/>
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.0/darkly/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-J01jr7rrJqxij+hUE1E+8N35mlD7L/TMrAO7tOarwMP7AWJM3P/lGXOjt0KLNhtE"
@@ -54,7 +55,7 @@
                                     </a>
                                 @endforeach
                                 @foreach(auth()->user()->participates as $part)
-                                    <a class="dropdown-item" href="{{ route('tracker.show', $tracker->id) }}">
+                                    <a class="dropdown-item" href="{{ route('tracker.show', $part->tracker->id) }}">
                                         {{$part->tracker->name}} ( {{$part->tracker->owner->name}} )
                                     </a>
                                 @endforeach

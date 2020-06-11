@@ -57,4 +57,8 @@ class User extends Authenticatable
     public function last_tracker(){
         return $this->belongsTo('App\Tracker', 'last_tracker_id');
     }
+
+    public function can_edit_tracker($tracker){
+        return count(Participant::where('tracker_id', $tracker->id)->where('user_id', auth()->user()->id)->where('permissions', '>', 0)->get()) || $tracker->owner_id == auth()->user()->id;
+    }
 }

@@ -18,12 +18,20 @@ class Tracker extends Model
         return $this->hasMany('App\ExpenseCategory');
     }
     public function income_sources(){
-        return $this->hasMany('App\IncomeSources');
+        return $this->hasMany('App\IncomeSource');
     }
     public function participants(){
         return $this->hasMany('App\Participant');
     }
+    public function is_participant(User $user){
+        if($user) {
+            foreach ($this->participants as $part) {
+                if ($part->user_id == $user->id) return true;
+            }
+        }
+        return false;
+    }
     public function transactions(){
-        return $this->hasMany('App\Transaction');
+        return $this->hasMany('App\Transaction')->orderBy('created_at', 'desc');
     }
 }

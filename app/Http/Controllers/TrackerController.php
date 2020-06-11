@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Tracker;
+use App\Transaction;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TrackerController extends Controller
@@ -13,11 +16,15 @@ class TrackerController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function index()
     {
-        //
+        if(auth()->user()->last_tracker_id) {
+            return $this->show(auth()->user()->last_tracker_id, true);
+        }else{
+            return redirect()->route('user.index');
+        }
     }
 
     /**
@@ -53,17 +60,46 @@ class TrackerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tracker  $tracker
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $tracker
+     * @param bool $passed
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function show(Tracker $tracker)
+    public function show(int $tracker, $passed=false)
     {
+        $tracker = Tracker::where('id', $tracker)->get();
+        if($tracker->count()) {
+            $tracker = $tracker[0];
+            $is_participant = $tracker->is_participant(auth()->user());
+            if (($is_participant || auth()->user()->id == $tracker->owner->id) && !$passed) {
+                $user = auth()->user();
+                $user->last_tracker_id = $tracker->id;
+                $user->save();
+                return redirect()->route('tracker.index');
+            } else if (auth()->user()->id == $tracker->owner->id || $is_participant) {
+                $stats = [
+                    'expensesThisMonth' => $tracker->transactions()->
+                        where('is_income', 0)->
+                        whereBetween('created_at', [(new Carbon('first day of this month'))->setTime(0,0,0), Carbon::now()])->sum('amount'),
+                    'incomeThisMonth' => $tracker->transactions()->
+                        where('is_income', 1)->
+                        whereBetween('created_at', [(new Carbon('first day of this month'))->setTime(0,0,0), Carbon::now()])->sum('amount'),
+                    'balance' => $tracker->transactions()->
+                        where('is_income', 1)->sum('amount') -
+                        $tracker->transactions()->
+                        where('is_income', 0)->sum('amount'),
+                ];
+                $stats['changeThisMonth'] = $stats['incomeThisMonth']-$stats['expensesThisMonth'];
+
+                return view('tracker', ['tracker' => $tracker, 'stats' => $stats]);
+            }
+        }
+        return redirect()->route('user.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Tracker  $tracker
+     * @param Tracker $tracker
      * @return \Illuminate\Http\Response
      */
     public function edit(Tracker $tracker)
@@ -79,7 +115,7 @@ class TrackerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tracker  $tracker
+     * @param Tracker $tracker
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Tracker $tracker)
@@ -90,7 +126,7 @@ class TrackerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tracker  $tracker
+     * @param Tracker $tracker
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(Tracker $tracker)
@@ -99,9 +135,12 @@ class TrackerController extends Controller
             if($tracker->owner->last_tracker_id == $tracker->id){
                 $owner  =$tracker->owner;
                 $owner->last_tracker_id = null;
-                $owner->save;
+                $owner->save();
             }
             foreach($tracker->participants as $part) $part->delete();
+            foreach($tracker->transactions as $tr) $tr->delete();
+            foreach($tracker->income_sources as $i) $i->delete();
+            foreach($tracker->expense_categories as $e) $e->delete();
             $tracker->delete();
             return redirect('/');
         }else{

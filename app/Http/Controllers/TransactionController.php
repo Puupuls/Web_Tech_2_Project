@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Participant;
 use App\Transaction;
 use Illuminate\Http\Request;
 
@@ -45,11 +46,11 @@ class TransactionController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Transaction $transaction)
     {
-        //
+        return view('transaction', ['transaction'=>$transaction]);
     }
 
     /**
@@ -79,10 +80,15 @@ class TransactionController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(Transaction $transaction)
     {
-        //
+        if(auth()->user()->can_edit_tracker($transaction->tracker)) {
+            $transaction->delete();
+            return redirect('/');
+        }else{
+            abort(403);
+        }
     }
 }

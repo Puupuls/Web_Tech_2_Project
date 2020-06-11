@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     protected $fillable = [
-        'amount', 'image_uuid', 'expense_category_id', 'tracker_id', 'added_by_user_id', 'income_source_id', 'is_income', 'description'
+        'amount', 'image_uuid', 'expense_category_id', 'tracker_id', 'added_by_user_id', 'income_source_id', 'is_income', 'description', 'created_at'
     ];
     public function added_by(){
         return $this->belongsTo('App\User', 'added_by_user_id');

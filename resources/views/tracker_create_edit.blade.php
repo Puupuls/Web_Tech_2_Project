@@ -50,7 +50,7 @@
                                 <div class="row justify-content-between row pl-3 pr-3" id="part-{{$part->id}}">
                                     <span class="align-middle">{{$part->user->name}} ({{$part->user->email}})</span>
                                     <span>
-                                        <label for="can-edit-{{$part->id}}"> {{__('messages.can_edit_transactions')}} </label>
+                                        <label for="can-edit-{{$part->id}}"> {{__('messages.can_edit')}} </label>
                                         <input type="checkbox" name="can-edit" onclick="toggle_can_edit({{$part->id}})" id="can-edit-{{$part->id}}" @if($part->permissions) checked @endif @if(auth()->user()->id != $tracker->owner_id) disabled @endif/>
                                     </span>
                                     <div>
@@ -73,8 +73,10 @@
     <script type="application/javascript">
         @if($tracker && (auth()->user()->id == $tracker->owner_id || auth()->user()-is_admin))
         function del(){
-            if(confirm(`{{__('messages.are_you_sure_delete')}}`))
-                event.preventDefault(); document.getElementById('delete-form').submit();
+            if(confirm(`{{__('messages.are_you_sure_delete')}}`)) {
+                event.preventDefault();
+                document.getElementById('delete-form').submit();
+            }
         }
         @endif
         @if($tracker && auth()->user()->id == $tracker->owner_id)
@@ -111,7 +113,7 @@
                             <div class="row justify-content-between row pl-3 pr-3" id="part-${data.new_id}">
                                 <span class="align-middle">${data.name} (${email})</span>
                                 <span>
-                                    <label for="can-edit-${data.new_id}"> {{__('messages.can_edit_transactions')}} </label>
+                                    <label for="can-edit-${data.new_id}"> {{__('messages.can_edit')}} </label>
                                     <input type="checkbox" name="can-edit" onclick="toggle_can_edit(${data.new_id})" id="can-edit-${data.new_id}"/>
                                 </span>
                                 <div>

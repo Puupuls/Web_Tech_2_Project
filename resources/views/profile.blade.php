@@ -7,7 +7,7 @@
                 <div class="card mb-3">
                     <div class="card-header">
                         <span class="align-middle">{{$user->name}}</span>
-                        <a href="{{auth()->user()->is_admin && auth()->user()->id != $user->id? route('user.edit', $user->id) : route('user.edit_mortal')}}" class="S float-right">{{__('messages.edit')}}</a>
+                        <a href="{{auth()->user()->is_admin && auth()->user()->id != $user->id? route('user.edit', $user->id) : route('user.edit_mortal')}}" class="float-right">{{__('messages.edit')}}</a>
                     </div>
                     <div class="card-body">
                         @if (session('status'))
@@ -38,7 +38,7 @@
                         </div>
                         <div class="card-body">
                             @foreach($user->participates as $part)
-                                <div id='part-{{$part->id}}' class="row justify-content-between">
+                                <div id='part-{{$part->id}}' class="row justify-content-between pl-3 pr-3">
                                     <a class="btn btn-dark" href="{{route('tracker.show', $part->tracker->id)}}">{{$part->tracker->name}} ( {{$part->tracker->owner->name}} )</a>
                                     @if(auth()->user()->id == $user->id)
                                         <a class="btn btn-dark" onclick="leave({{$part->id}})">{{__('messages.leave')}}</a>
