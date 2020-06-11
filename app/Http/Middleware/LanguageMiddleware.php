@@ -27,6 +27,13 @@ class LanguageMiddleware
             }
             App::setLocale($l);
         }
+
+        $tz = $request->cookie('timezone');
+        if (!empty($tz)) {
+            date_default_timezone_set($tz);
+        }else{
+            date_default_timezone_set('Europe/Riga');
+        }
         return $next($request);
     }
 }
