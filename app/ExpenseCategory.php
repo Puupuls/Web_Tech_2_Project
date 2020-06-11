@@ -11,6 +11,6 @@ class ExpenseCategory extends Model
     ];
     protected $table = 'expense_categories';
     public function tracker(){
-        return $this->belongsTo('tracker');
+        return $this->belongsTo('App\Tracker');
     }
 }

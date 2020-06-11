@@ -34,13 +34,13 @@ Auth::routes();
 Route::get('user/edit', 'UserController@edit_mortal')->name('user.edit_mortal');
 Route::resource('user', 'UserController');
 
-Route::resource('tracker', 'TrackerController');
-
 Route::resource('tracker/participant', 'ParticipantController');
 
 Route::resource('tracker/income', 'IncomeSourceController');
 
 Route::resource('tracker/expense', 'ExpenseCategoryController');
+
+Route::resource('tracker', 'TrackerController');
 
 Route::resource('transaction', 'TransactionController');
 

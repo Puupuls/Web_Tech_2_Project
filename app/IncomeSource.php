@@ -11,6 +11,6 @@ class IncomeSource extends Model
     ];
     protected $table = 'income_sources';
     public function tracker(){
-        return $this->belongsTo('tracker');
+        return $this->belongsTo('App\Tracker');
     }
 }

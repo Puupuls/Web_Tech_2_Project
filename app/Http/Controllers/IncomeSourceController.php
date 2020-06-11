@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\IncomeSource;
+use App\Tracker;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class IncomeSourceController extends Controller
 {
@@ -13,17 +16,19 @@ class IncomeSourceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
-        //
+        if(auth()->user()->can_edit_tracker())
+            return view('incomes', ['tracker'=>auth()->user()->last_tracker]);
+        abort(403);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function create()
     {
@@ -33,19 +38,34 @@ class IncomeSourceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
-        //
+        $success = false;
+        $new_id = 0;
+
+        if($request['name'] && auth()->user()->can_edit_tracker(Tracker::findorFail($request['tracker_id']))){
+            $inc = IncomeSource::where('tracker_id', $request['tracker_id'])->where('name', $request['name'])->get();
+            if($inc->count() == 0) {
+                $success = true;
+                $inc = IncomeSource::create([
+                    'name' => $request['name'],
+                    'tracker_id' => $request['tracker_id']
+                ]);
+                $new_id = $inc->id;
+            }
+        }
+
+        return response()->json(['success'=>$success, 'new_id'=>$new_id]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\IncomeSource  $incomeSource
-     * @return \Illuminate\Http\Response
+     * @param IncomeSource $incomeSource
+     * @return void
      */
     public function show(IncomeSource $incomeSource)
     {
@@ -55,8 +75,8 @@ class IncomeSourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\IncomeSource  $incomeSource
-     * @return \Illuminate\Http\Response
+     * @param IncomeSource $incomeSource
+     * @return void
      */
     public function edit(IncomeSource $incomeSource)
     {
@@ -66,20 +86,25 @@ class IncomeSourceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\IncomeSource  $incomeSource
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param  int  $incomeSource
+     * @return JsonResponse
      */
-    public function update(Request $request, IncomeSource $incomeSource)
+    public function update(Request $request, $incomeSource)
     {
-        //
+        $incomeSource = IncomeSource::findOrFail($incomeSource);
+        if($request['name'] && auth()->user()->can_edit_tracker($incomeSource->tracker)){
+            $incomeSource->name = $request['name'];
+            $incomeSource->save();
+        }
+        return response()->json();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\IncomeSource  $incomeSource
-     * @return \Illuminate\Http\Response
+     * @param IncomeSource $incomeSource
+     * @return void
      */
     public function destroy(IncomeSource $incomeSource)
     {

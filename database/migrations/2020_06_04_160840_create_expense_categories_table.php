@@ -17,7 +17,6 @@ class CreateExpenseCategoriesTable extends Migration
             $table->id();
             $table->foreignId('tracker_id')->constrained();
             $table->string('name');
-            $table->integer('order_idx');
             $table->timestamps();
         });
     }

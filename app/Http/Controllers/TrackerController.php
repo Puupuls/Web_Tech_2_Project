@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Tracker;
-use App\Transaction;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

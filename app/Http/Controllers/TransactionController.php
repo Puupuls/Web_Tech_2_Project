@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Participant;
 use App\Transaction;
 use Illuminate\Http\Request;
 
@@ -24,11 +23,13 @@ class TransactionController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
-        //
+        if(auth()->user()->can_edit_tracker()){
+            return view('transaction_create_edit', ['tracker' => auth()->user()->last_tracker, 'transaction' => []]);
+        }else abort(404);
     }
 
     /**
@@ -57,11 +58,13 @@ class TransactionController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Transaction $transaction)
     {
-        //
+        if(auth()->user()->can_edit_tracker($transaction->tracker())){
+            return view('transaction_create_edit', ['tracker' => auth()->user()->last_tracker, 'transaction' => $transaction]);
+        }else abort(404);
     }
 
     /**
