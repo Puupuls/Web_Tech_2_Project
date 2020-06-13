@@ -13,10 +13,10 @@ class Transaction extends Model
         return $this->belongsTo('App\User', 'added_by_user_id');
     }
     public function income_source(){
-        return $this->belongsTo('App\IncomeSource');
+        return $this->belongsTo('App\IncomeSource', 'income_source_id');
     }
     public function expense_category(){
-        return $this->belongsTo('App\ExpenseCategory');
+        return $this->belongsTo('App\ExpenseCategory', 'expense_category_id');
     }
     public function tracker(){
         return $this->belongsTo('App\Tracker');

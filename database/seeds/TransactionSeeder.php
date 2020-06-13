@@ -22,7 +22,6 @@ class TransactionSeeder extends Seeder
             'is_income' => false,
             'description'=>'Phone',
             'amount' => 15.0,
-            'image_uuid' => null,
             'created_at' => \Carbon\Carbon::create(2020, 6, 11, 12, 25, 0)
         ]);
         Transaction::create([
@@ -33,7 +32,6 @@ class TransactionSeeder extends Seeder
             'is_income' => true,
             'description'=>'Finansējums',
             'amount' => 123.45,
-            'image_uuid' => null,
             'created_at' => \Carbon\Carbon::create(2020, 5, 21, 20, 14, 12)
         ]);
         Transaction::create([
@@ -44,7 +42,6 @@ class TransactionSeeder extends Seeder
             'is_income' => false,
             'description'=>'Hostings',
             'amount' => 49.99,
-            'image_uuid' => null,
             'created_at' => \Carbon\Carbon::create(2020, 6, 5, 14, 2, 59)
         ]);
         Transaction::create([
@@ -55,7 +52,6 @@ class TransactionSeeder extends Seeder
             'is_income' => false,
             'description'=>'Testēšana',
             'amount' => 60.49,
-            'image_uuid' => null,
             'created_at' => \Carbon\Carbon::create(2020, 6, 7, 8, 57, 52)
         ]);
         Transaction::create([
@@ -66,7 +62,6 @@ class TransactionSeeder extends Seeder
             'is_income' => false,
             'description'=>'Testēšana',
             'amount' => 17.01,
-            'image_uuid' => null,
             'created_at' => \Carbon\Carbon::create(2020, 6, 7, 12, 43, 35)
         ]);
         Transaction::create([
@@ -77,7 +72,6 @@ class TransactionSeeder extends Seeder
             'is_income' => false,
             'description'=>'Testēšana',
             'amount' => 29.99,
-            'image_uuid' => null,
             'created_at' => \Carbon\Carbon::create(2020, 6, 9, 9, 11, 13)
         ]);
         Transaction::create([
@@ -88,7 +82,6 @@ class TransactionSeeder extends Seeder
             'is_income' => true,
             'description'=>'Finansējums',
             'amount' => 750,
-            'image_uuid' => null,
             'created_at' => \Carbon\Carbon::create(2020, 6, 10, 10, 1, 7)
         ]);
         Transaction::create([
@@ -99,7 +92,6 @@ class TransactionSeeder extends Seeder
             'is_income' => false,
             'description'=>'Algu izmaksas',
             'amount' => 500,
-            'image_uuid' => null,
             'created_at' => \Carbon\Carbon::create(2020, 6, 10, 16, 26, 24)
         ]);
     }

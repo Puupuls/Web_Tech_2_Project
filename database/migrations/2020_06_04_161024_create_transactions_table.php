@@ -21,8 +21,8 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('income_source_id')->nullable()->constrained();
             $table->boolean('is_income');
             $table->decimal('amount', 12, 2);
-            $table->string('description');
-            $table->string('image_uuid')->nullable();
+            $table->string('description')->nullable();
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

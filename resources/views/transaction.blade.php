@@ -9,8 +9,9 @@
                         <span class="align-middle">{{__('messages.transaction')}}</span>
                         @if(auth()->user()->can_edit_tracker($transaction->tracker))
                             <a onclick="del()" href="#" class="float-right ml-2">{{__('messages.delete')}}</a>
-                            <a href="{{route('transaction.edit', $transaction->id)}}" onclick="del()" class="float-right">{{__('messages.edit')}}</a>
+                            <a href="{{route('transaction.edit', $transaction->id)}}" class="float-right ml-2">{{__('messages.edit')}}</a>
                         @endif
+                        <a href="{{URL::previous()}}" class="float-right">{{__('messages.back')}}</a>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -53,6 +54,14 @@
                                 {{$transaction->added_by->name}}
                             </div>
                         </div>
+                        @if($transaction->image_path)
+                            <div class="row justify-content-center">
+                                <div class="text-center">
+                                    {{__('messages.image')}}:<br/>
+                                    <img src="{{asset($transaction->image_path)}}"/>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
