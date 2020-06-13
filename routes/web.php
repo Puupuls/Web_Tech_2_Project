@@ -33,7 +33,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('admin/list_users', 'UserController@list')->name('user.list');
+Route::get('admin/list_users', 'UserController@list')->name('user.list')->middleware(['auth', 'password.confirm']);;
 
 Route::get('user/edit', 'UserController@edit_mortal')->name('user.edit_mortal');
 Route::resource('user', 'UserController');

@@ -33,6 +33,7 @@ return [
     "err_msg_500" => "Server Error",
     "err_msg_503" => "Service Unavailable",
     "expenses" => "Expenses",
+    "filter" => "Filter",
     "image" => "Image",
     "income" => "Income",
     "is_income" => "Is income?",

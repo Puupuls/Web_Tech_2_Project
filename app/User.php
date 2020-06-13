@@ -64,4 +64,11 @@ class User extends Authenticatable
             count(Participant::where('tracker_id', $tracker->id)->where('user_id', auth()->user()->id)->where('permissions', '>', 0)->get()) ||
             $tracker->owner_id == auth()->user()->id;
     }
+
+    public function can_access_tracker($tracker=null){
+        if(!$tracker) $tracker = auth()->user()->last_tracker;
+        return $tracker &&
+            count(Participant::where('tracker_id', $tracker->id)->where('user_id', auth()->user()->id)->get()) ||
+            $tracker->owner_id == auth()->user()->id;
+    }
 }

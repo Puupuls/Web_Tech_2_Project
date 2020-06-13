@@ -146,6 +146,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name'=>'Name',
+        'email'=>'Email',
+        'image' => 'Image',
+        'income_source' => 'Category',
+        'expense_category' => 'Category',
+    ],
 
 ];

@@ -97,7 +97,9 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        return view('transaction', ['transaction'=>$transaction]);
+        if(auth()->user()->can_access_tracker($transaction->tracker)) {
+            return view('transaction', ['transaction' => $transaction]);
+        }abort(403);
     }
 
     /**
