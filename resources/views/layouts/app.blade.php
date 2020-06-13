@@ -70,7 +70,7 @@
                                         {{$part->tracker->name}} ( {{$part->tracker->owner->name}} )
                                     </a>
                                 @endforeach
-                                    <a href="{{route('tracker.create')}}" class="dropdown-item">{{__('messages.add_new')}}</a>
+                                <a href="{{route('tracker.create')}}" class="dropdown-item">{{__('messages.add_new')}}</a>
                             </div>
                         </li>
                     @endauth
@@ -108,6 +108,11 @@
                                 <a class="dropdown-item" href="{{ route('user.index') }}">
                                     {{ __('messages.profile') }}
                                 </a>
+                                @if(auth()->user()->is_admin)
+                                    <a class="dropdown-item" href="{{ route('user.list') }}">
+                                        {{ __('messages.user_list') }}
+                                    </a>
+                                @endif
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

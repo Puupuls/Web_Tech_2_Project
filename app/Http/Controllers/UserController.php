@@ -20,6 +20,15 @@ class UserController extends Controller
         return $this->show(auth()->user()->id, true);
     }
 
+    public function list()
+    {
+        if(auth()->user()->is_admin) {
+            return view('user_list', ['users'=>User::orderBy('email')->get()]);
+        }else{
+            abort(403);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

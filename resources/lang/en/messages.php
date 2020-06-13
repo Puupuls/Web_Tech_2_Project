@@ -54,5 +54,7 @@ return [
     "transaction" => "Transaction",
     "transactions" => "Transactions",
     "update" => "Update",
+    "user_list" => "User list",
+    "users" => "Users",
     "yes" => "Yes",
 ];
