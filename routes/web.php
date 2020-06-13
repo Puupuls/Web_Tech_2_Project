@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/redirect', 'Auth\LoginController@redirectToGoogle');
 Route::get('/callback', 'Auth\LoginController@handleGoogleCallback');
 Route::get('lang/{locale}','LanguageController')->name('lang');

@@ -6,7 +6,10 @@
             <div class="col-md-8">
                 @if($tracker)
                     <div class="card mb-3">
-                        <div class="card-header">{{__('messages.manage_income_categories')}}</div>
+                        <div class="card-header">
+                            <span class="align-middle">{{__('messages.manage_income_categories')}}</span>
+                            <a href="{{URL::previous()}}" class="float-right">{{__('messages.back')}}</a>
+                        </div>
                         <div class="card-body" id="participant-list">
                             <div class="row mb-3">
                                 <label for="income-name" class="col-md-4 control-label text-md-right mb:0" style="line-height:1.5; padding-top: 0.375rem;">{{__('auth.name')}}</label>
