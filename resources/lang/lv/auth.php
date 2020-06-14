@@ -19,7 +19,7 @@ return [
     'login' => 'Ienākt',
     'google_login' => 'Ienākt izmantojot Google',
     'register' => 'Reģistrēties',
-    'logout' => 'Iesiet',
+    'logout' => 'Iziet',
 
     'email_address' => 'Ēpasta adrese',
     'name' => 'Vārds',
