@@ -16,7 +16,7 @@
                         <a href="{{route('expense.index')}}" class="float-right ml-3">{{__('messages.edit_expense_categories')}}</a>
                         <a href="{{URL::previous()}}" class="float-right">{{__('messages.back')}}</a>
                     </div>
-                    {{Form::open(['files'=>true, 'action' => [$transaction? 'TransactionController@update' : 'TransactionController@store', $transaction->id?? ''], 'class' => 'form-horizontal', 'method'=>'PUT']) }}
+                    {{Form::open(['files'=>true, 'action' => [$transaction? 'TransactionController@update' : 'TransactionController@store', $transaction->id?? ''], 'class' => 'form-horizontal', 'method'=>$transaction? 'PATCH' : 'POST']) }}
                     {{ Form::hidden('tracker_id', $tracker->id, ['class' => 'form-control'.($errors->has('amount') ? ' is-invalid' : '')]) }}
                     <div class="card-body">
                         <div class="row">
